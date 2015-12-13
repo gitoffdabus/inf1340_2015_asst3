@@ -33,7 +33,12 @@ R2 = [["Department", "Head"],
       ["production", "Mori"],
       ["sales", "Brown"]]
 
+R3 = [[]]
 
+GRADUATES = [["Number", "Surname", "Age"],
+             [7274, "Robinson", 37],
+             ["Surname", "O'Malley", 39],
+             [9824, "Darkes", 38]]
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -73,7 +78,11 @@ def test_selection():
               ["Verdi", "Nico", 36, 4500],
               ["Smith", "Mark", 40, 3900]]
 
+
     assert is_equal(result, selection(EMPLOYEES, filter_employees))
+    assert selection(GRADUATES, filter_employees) is None
+    assert selection(R3, filter_employees) is None
+
 
 
 def test_projection():
@@ -86,9 +95,20 @@ def test_projection():
               ["Black", "Lucy"],
               ["Verdi", "Nico"],
               ["Smith", "Mark"]]
+    result_2 = [["Age", "Salary"],
+                [25, 2000],
+                [40, 3000],
+                [36, 4500],
+                [40, 3900]]
+    result_3 = [["Surname"],
+                ["Smith"],
+                ["Black"],
+                ["Verdi"],
+                ["Smith"]]
 
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
-
+    assert is_equal(result_2, projection(EMPLOYEES, ["Age", "Salary"]))
+    assert is_equal(result_3, projection(EMPLOYEES, ["Surname"]))
 
 def test_cross_product():
     """
