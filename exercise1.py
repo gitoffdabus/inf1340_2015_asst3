@@ -5,27 +5,7 @@
 This module performs table operations on database tables
 implemented as lists of lists. """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
-__copyright__ = "2015 Susan Sim"
-__license__ = "MIT License"
-
-
-EMPLOYEES = [["Surname", "FirstName", "Age", "Salary"],
-             ["Smith", "Mary", 25, 2000],
-             ["Black", "Lucy", 40, 3000],
-             ["Verdi", "Nico", 36, 4500],
-             ["Smith", "Mark", 40, 3900]]
-
-R1 = [["Employee", "Department"],
-      ["Smith", "sales"],
-      ["Black", "production"],
-      ["White", "production"]]
-
-R2 = [["Department", "Head"],
-      ["production", "Mori"],
-      ["sales", "Brown"]]
-
+__author__ = 'Oli_Mib_Par'
 
 #####################
 # HELPER FUNCTIONS ##
@@ -84,14 +64,29 @@ def selection(t, f):
     [["A", "B", "C"], [4, 5, 6]]
 
     """
-    result_table = []
+    i = 0
+    table = [] #resulting table
+    flag1 = False #check for function return
+    flag2 = False #check if result is populated
+
+    # return None if table to run function is empty
+    if t == None:
+        return None
+
     for row in t:
-        # checks whether the row satisfies the condition on the function
-        if f(row) is True:
-            result_table.append(row)
-    # Check whether only the schema is added or other rows are also added
-    if len(result_table) > 1:
-        return result_table
+        if i == 0:
+            table.append(row) #add the first row of labels
+        else:
+            flag1 = f(row)
+            if flag1:
+                table.append(row)
+                flag2 = True #atleast one row matches the function
+            else:
+                continue
+        i = i+1
+
+    if flag2:
+        return table
     else:
         return None
 
@@ -164,9 +159,10 @@ def cross_product(t1, t2):
             for row2 in t2[1:]:
                 temp_list = row1 + row2
                 result_table.append(temp_list)
-    return result_table
+    if len(result_table) <= 1:
+        result = None
+        return result
+    else:
+        return result_table
 
 
-# print(selection(EMPLOYEES, filter_employees))
-# print(projection(EMPLOYEES, ["FirtName"]))
-# print(cross_product(R1, R2))

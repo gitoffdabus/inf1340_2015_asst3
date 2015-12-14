@@ -6,10 +6,7 @@ Test module for exercise3.py
 
 """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
-__copyright__ = "2015 Susan Sim"
-__license__ = "MIT License"
+__author__ = 'Oli_Mib_Par'
 
 from exercise1 import selection, projection, cross_product
 
@@ -33,7 +30,20 @@ R2 = [["Department", "Head"],
       ["production", "Mori"],
       ["sales", "Brown"]]
 
+R3 = [[]]
 
+R4 = [["A", "B"]]
+
+R5 = [["C","D"]]
+
+R6 = [["A", "B"], [1,2], [3,4]]
+
+R7 = [["C", "D"], [5,6]]
+
+GRADUATES = [["Number", "Surname", "Age"],
+             [7285, "Ryan", 37],
+             ["Surname", "Jack", 39],
+             [9555, "Darkes", 38]]
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -73,7 +83,11 @@ def test_selection():
               ["Verdi", "Nico", 36, 4500],
               ["Smith", "Mark", 40, 3900]]
 
+
     assert is_equal(result, selection(EMPLOYEES, filter_employees))
+    assert selection(GRADUATES, filter_employees) is None
+    assert selection(R3, filter_employees) is None
+
 
 
 def test_projection():
@@ -86,8 +100,26 @@ def test_projection():
               ["Black", "Lucy"],
               ["Verdi", "Nico"],
               ["Smith", "Mark"]]
+    result_2 = [["Age", "Salary"],
+                [25, 2000],
+                [40, 3000],
+                [36, 4500],
+                [40, 3900]]
+    result_3 = [["Surname"],
+                ["Smith"],
+                ["Black"],
+                ["Verdi"],
+                ["Smith"]]
 
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
+    assert is_equal(result_2, projection(EMPLOYEES, ["Age", "Salary"]))
+    assert is_equal(result_3, projection(EMPLOYEES, ["Surname"]))
+    #assert projection(R3,[]) is None
+    try:
+        projection(EMPLOYEES,["inf"])
+    except UnknownAttributeException:
+        assert True
+
 
 
 def test_cross_product():
@@ -103,4 +135,11 @@ def test_cross_product():
               ["White", "production", "production", "Mori"],
               ["White", "production", "sales", "Brown"]]
 
+    result2 =[["A", "B", "C", "D"],
+              [1, 2, 5, 6],
+              [3, 4, 5, 6]]
+
     assert is_equal(result, cross_product(R1, R2))
+    assert is_equal(result2, cross_product(R6, R7))
+    assert cross_product(R4, R5) is None
+    assert cross_product(R3, R3) is None
