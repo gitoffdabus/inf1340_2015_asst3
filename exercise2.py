@@ -53,6 +53,9 @@ def is_more_than_x_years_ago(x, date_string):
     return (date - x_years_ago).total_seconds() < 0
 
 
+
+
+
 def decide(input_file, countries_file):
     """
     Decides whether a traveller's entry into Kanadia should be accepted
@@ -66,7 +69,88 @@ def decide(input_file, countries_file):
         "Accept", "Reject", and "Quarantine"
     """
 
-    return ["Reject"]
+    with open(input_file, "r") as file_reader:
+        file_contents = file_reader.read()
+        json_citizens = json.loads(file_contents)
+    with open(countries_file, "r") as file_reader2:
+        file_contents2 = file_reader2.read()
+        json_countries = json.loads(file_contents2)
+    # print json.dumps(json_citizens, indent=1)
+
+    result_list = []
+    for citizen in json_citizens:
+        new_list = []
+        for entry in REQUIRED_FIELDS:
+            # Check whether the required information for an entry record is complete
+            if entry in citizen.keys():
+                new_list.append(entry)
+        if new_list == REQUIRED_FIELDS:
+            # check whether the passport no, visa no, date are legal
+            passport_number_validity = valid_passport_format(citizen["passport"])
+            if passport_number_validity is False:
+                result_list.append("Reject")
+                break
+
+            # Check for date format
+
+
+            # Check whether the traveller's home country is Kanadia
+            if citizen["home"]["country"] == "KAN":
+                # Check for medical advisory from returning country
+                quarantine_required = medical_advisory_check(citizen, json_countries)
+                if quarantine_required is False:
+                    result_list.append("Accept")
+                else:
+                    result_list.append("Quarantine")
+            else:
+                # Check for other valid locations
+                location = valid_location(citizen, json_countries)
+                if location is False:
+                    result_list.append("Reject")
+                elif location is True:
+                    print("yes")
+                    # Check reason for entry
+                    reason = reason_for_entry(citizen, json_countries)
+                    # If reason is to visit & no visa is required then simply check for medical advisory
+                    if reason == 0:
+                        print("Yes1")
+                        quarantine_required = medical_advisory_check(citizen, json_countries)
+                        if quarantine_required is False:
+                            result_list.append("Accept")
+                        else:
+                            result_list.append("Quarantine")
+                    else:
+                        # if visa is required
+                        # Check for valid visa number
+                        visa_number_validity = valid_visa_format(citizen["visa"]["code"])
+                        if visa_number_validity is False:
+                            result_list.append("Reject")
+                            break
+
+                        # Check for valid visa date
+                        date_format_validity = valid_date_format(citizen["visa"]["date"])
+                        if date_format_validity is False:
+                            result_list.append("Reject")
+                            break
+
+                        # Check for valid visa duration
+                        visa_duration_validity = visa_duration(citizen["visa"]["date"])
+                        if visa_duration_validity is False:
+                            result_list.append("Reject")
+                            break
+
+                        # if the previous three checks are cleared, check for medical advisory
+                        quarantine_required = medical_advisory_check(citizen, json_countries)
+                        if quarantine_required is False:
+                            result_list.append("Accept")
+                        else:
+                            result_list.append("Quarantine")
+        else:
+            result_list.append("Reject")
+    print(result_list)
+
+
+# print json.dumps(json_countries, indent=1)
 
 
 def valid_passport_format(passport_number):
@@ -75,7 +159,12 @@ def valid_passport_format(passport_number):
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
-    return False
+    passport_format_regex = re.compile(r"(\w{5}-){4}\w{5}$")
+    passport_match = passport_format_regex.match(passport_number)
+    if passport_match is None:
+        return False
+    else:
+        return True
 
 
 def valid_visa_format(visa_code):
@@ -86,6 +175,13 @@ def valid_visa_format(visa_code):
 
     """
 
+    visa_format_regex = re.compile(r"\w{5}-\w{5}$")
+    visa_match = visa_format_regex.match(visa_code)
+    if visa_match is None:
+        return False
+    else:
+        return True
+
 
 def valid_date_format(date_string):
     """
@@ -93,5 +189,74 @@ def valid_date_format(date_string):
     :param date_string: date to be checked
     :return: Boolean True if the format is valid, False otherwise
     """
+    date_format_regex = re.compile(r"\d{4}-\d{2}-\d{2}")
+    date_match = date_format_regex.match(date_string)
+    if date_match is None:
+        return False
+    else:
+        return True
 
-    return False
+
+def valid_location(citizen_location, ministry_location):
+    if citizen_location["home"]["country"] not in ministry_location.keys() or citizen_location["from"]["country"] not in ministry_location.keys():
+        return False
+    else:
+        return True
+
+
+def visa_type(citizen_visa, visit_country):
+    if citizen_visa["home"]["country"] in visit_country.keys():
+        country_code = citizen_visa["home"]["country"]
+        if visit_country[country_code]["visitor_visa_required"] == 0:
+            return 0
+        else:
+            return 1
+
+
+def reason_for_entry(citizen_reason, country):
+    # print("ji")
+    if citizen_reason["entry_reason"] == "returning":
+        return 0
+    elif citizen_reason["entry_reason"] == "visit":
+        # chk whether visitor visa required
+        visa_required = visa_type(citizen_reason, country)
+        if visa_required == 0:
+            return 0
+        else:
+            return 1
+
+
+def medical_advisory_check(citizen, medical_advisory):
+    # print("ji")
+    if citizen["from"]["country"] in medical_advisory.keys():
+        if medical_advisory[citizen["from"]["country"]]["medical_advisory"] == "":
+            return False
+        else:
+            return True
+    else:
+        return False
+
+
+def visa_duration(date_string):
+    """
+    Check if date is less than two years ago.
+    :param date_string: a date string in format "YYYY-MM-DD"
+    :return: True if date is less than two years ago; False otherwise.
+    """
+
+    now = datetime.datetime.now()
+    two_years_ago = now.replace(year=now.year - 2)
+    date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    return (date - two_years_ago).total_seconds() < 0
+
+
+
+
+
+#decide("test_jsons/test_returning_citizen.json", "test_jsons/countries.json")
+
+#decide("test_jsons/test1.json", "test_jsons/countries.json")
+
+#print(is_more_than_2_years_ago("2014-12-12"))
+
+
