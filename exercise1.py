@@ -11,6 +11,7 @@ __author__ = 'Oli_Mib_Par'
 # HELPER FUNCTIONS ##
 #####################
 
+
 def remove_duplicates(l):
     """
     Removes duplicates from l, where l is a List of Lists.
@@ -64,23 +65,26 @@ def selection(t, f):
     [["A", "B", "C"], [4, 5, 6]]
 
     """
+
     i = 0
-    table = [] #resulting table
-    flag1 = False #check for function return
-    flag2 = False #check if result is populated
+    table = []
+    # Resulting table
+    flag1 = False
+    # Check for function return
+    flag2 = False
+    # Check if result is populated
 
     # return None if table to run function is empty
-    if t == None:
-        return None
-
     for row in t:
         if i == 0:
-            table.append(row) #add the first row of labels
+            table.append(row)
+            # Add the first row of labels
         else:
             flag1 = f(row)
             if flag1:
                 table.append(row)
-                flag2 = True #atleast one row matches the function
+                flag2 = True
+                # At least one row matches the function
             else:
                 continue
         i = i+1
@@ -89,6 +93,7 @@ def selection(t, f):
         return table
     else:
         return None
+
 
 
 def index_calculator(row, r):
@@ -121,7 +126,10 @@ def projection(t, r):
 
     """
 
-    # call helper to get index of matching columns
+    if r == "" or r is None or not r:
+        return None
+
+    # Call helper to get index of matching columns
     attribute_index = index_calculator(t[0], r)
     print (attribute_index)
     if attribute_index is []:
@@ -135,6 +143,8 @@ def projection(t, r):
                 temp_list.append(row[index])
             result_table.append(temp_list)
             temp_list = []
+
+
     return result_table
 
 
@@ -165,4 +175,7 @@ def cross_product(t1, t2):
     else:
         return result_table
 
-
+#
+# R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
+# print projection(R,[])
+# print projection([],[])

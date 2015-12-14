@@ -114,6 +114,9 @@ def test_projection():
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
     assert is_equal(result_2, projection(EMPLOYEES, ["Age", "Salary"]))
     assert is_equal(result_3, projection(EMPLOYEES, ["Surname"]))
+    assert is_equal(None, projection(EMPLOYEES, []))
+    assert is_equal(None, projection([], []))
+    assert is_equal(None, projection(EMPLOYEES, None))
     #assert projection(R3,[]) is None
     try:
         projection(EMPLOYEES,["inf"])
