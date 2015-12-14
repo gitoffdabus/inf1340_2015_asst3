@@ -6,10 +6,7 @@ Test module for exercise3.py
 
 """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
-__copyright__ = "2015 Susan Sim"
-__license__ = "MIT License"
+__author__ = 'Oli_Mib_Par'
 
 from exercise1 import selection, projection, cross_product
 
@@ -35,10 +32,18 @@ R2 = [["Department", "Head"],
 
 R3 = [[]]
 
+R4 = [["A", "B"]]
+
+R5 = [["C","D"]]
+
+R6 = [["A", "B"], [1,2], [3,4]]
+
+R7 = [["C", "D"], [5,6]]
+
 GRADUATES = [["Number", "Surname", "Age"],
-             [7274, "Robinson", 37],
-             ["Surname", "O'Malley", 39],
-             [9824, "Darkes", 38]]
+             [7285, "Ryan", 37],
+             ["Surname", "Jack", 39],
+             [9555, "Darkes", 38]]
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -109,6 +114,13 @@ def test_projection():
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
     assert is_equal(result_2, projection(EMPLOYEES, ["Age", "Salary"]))
     assert is_equal(result_3, projection(EMPLOYEES, ["Surname"]))
+    #assert projection(R3,[]) is None
+    try:
+        projection(EMPLOYEES,["inf"])
+    except UnknownAttributeException:
+        assert True
+
+
 
 def test_cross_product():
     """
@@ -123,4 +135,11 @@ def test_cross_product():
               ["White", "production", "production", "Mori"],
               ["White", "production", "sales", "Brown"]]
 
+    result2 =[["A", "B", "C", "D"],
+              [1, 2, 5, 6],
+              [3, 4, 5, 6]]
+
     assert is_equal(result, cross_product(R1, R2))
+    assert is_equal(result2, cross_product(R6, R7))
+    assert cross_product(R4, R5) is None
+    assert cross_product(R3, R3) is None
