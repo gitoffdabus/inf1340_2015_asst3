@@ -47,6 +47,24 @@ def filter_employees(row):
     return row[-2] >= 30 and row[-1] > 3500
 
 
+def index_calculator(row, r):
+    """ Stores the index of the matching columns in a new list
+    :param: row - the row of the table in which the attribute is to be found
+    :param: r - the attributes subset
+    :returns: a list which contains the indexes of the attributes
+    """
+    new_list = []
+    for index in r:
+        if index in row:
+            new_list.append(row.index(index))
+    new_list.sort()
+    return new_list
+
+
+##################
+# MAIN FUNCTIONS##
+##################
+
 def selection(t, f):
     """
     Performs selection operation on table t that satisfies condition f.
@@ -83,20 +101,6 @@ def selection(t, f):
         return table
     else:
         return None
-
-
-def index_calculator(row, r):
-    """ Stores the index of the matching columns in a new list
-    :param: row - the row of the table in which the attribute is to be found
-    :param: r - the attributes subset
-    :returns: a list which contains the indexes of the attributes
-    """
-    new_list = []
-    for index in r:
-        if index in row:
-            new_list.append(row.index(index))
-    new_list.sort()
-    return new_list
 
 
 def projection(t, r):
