@@ -1,15 +1,12 @@
 #!/usr/bin/env python
+from exercise1 import selection, projection, cross_product
 
 """ Assignment 3, Exercise 1, INF1340, Fall, 2015. DBMS
-
 Test module for exercise3.py
 
 """
 
 __author__ = 'Oli_Mib_Par'
-
-from exercise1 import selection, projection, cross_product
-
 
 ###########
 # TABLES ##
@@ -34,11 +31,11 @@ R3 = [[]]
 
 R4 = [["A", "B"]]
 
-R5 = [["C","D"]]
+R5 = [["C", "D"]]
 
-R6 = [["A", "B"], [1,2], [3,4]]
+R6 = [["A", "B"], [1, 2], [3, 4]]
 
-R7 = [["C", "D"], [5,6]]
+R7 = [["C", "D"], [5, 6]]
 
 GRADUATES = [["Number", "Surname", "Age"],
              [7285, "Ryan", 37],
@@ -47,8 +44,9 @@ GRADUATES = [["Number", "Surname", "Age"],
 #####################
 # HELPER FUNCTIONS ##
 #####################
-def is_equal(t1, t2):
 
+
+def is_equal(t1, t2):
     t1.sort()
     t2.sort()
 
@@ -82,12 +80,9 @@ def test_selection():
     result = [["Surname", "FirstName", "Age", "Salary"],
               ["Verdi", "Nico", 36, 4500],
               ["Smith", "Mark", 40, 3900]]
-
-
     assert is_equal(result, selection(EMPLOYEES, filter_employees))
     assert selection(GRADUATES, filter_employees) is None
     assert selection(R3, filter_employees) is None
-
 
 
 def test_projection():
@@ -114,15 +109,20 @@ def test_projection():
     assert is_equal(result, projection(EMPLOYEES, ["Surname", "FirstName"]))
     assert is_equal(result_2, projection(EMPLOYEES, ["Age", "Salary"]))
     assert is_equal(result_3, projection(EMPLOYEES, ["Surname"]))
-    assert is_equal(None, projection(EMPLOYEES, []))
-    assert is_equal(None, projection([], []))
-    assert is_equal(None, projection(EMPLOYEES, None))
-    #assert projection(R3,[]) is None
     try:
-        projection(EMPLOYEES,["inf"])
+        projection(EMPLOYEES, ["inf"])
     except UnknownAttributeException:
         assert True
 
+    try:
+        projection(R3, ["inf"])
+    except UnknownAttributeException:
+        assert True
+
+    try:
+        projection(R3, [""])
+    except UnknownAttributeException:
+        assert True
 
 
 def test_cross_product():
@@ -138,9 +138,9 @@ def test_cross_product():
               ["White", "production", "production", "Mori"],
               ["White", "production", "sales", "Brown"]]
 
-    result2 =[["A", "B", "C", "D"],
-              [1, 2, 5, 6],
-              [3, 4, 5, 6]]
+    result2 = [["A", "B", "C", "D"],
+               [1, 2, 5, 6],
+               [3, 4, 5, 6]]
 
     assert is_equal(result, cross_product(R1, R2))
     assert is_equal(result2, cross_product(R6, R7))

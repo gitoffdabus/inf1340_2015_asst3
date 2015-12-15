@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-""" Assignment 3, Exercise 2, INF1340, Fall, 2015. DBMS
+""" Assignment 3, Exercise 1, INF1340, Fall, 2015. DBMS
 
 This module performs table operations on database tables
 implemented as lists of lists. """
-
 __author__ = 'Oli_Mib_Par'
 
 #####################
@@ -68,23 +67,19 @@ def selection(t, f):
 
     i = 0
     table = []
-    # Resulting table
-    flag1 = False
-    # Check for function return
-    flag2 = False
-    # Check if result is populated
 
-    # return None if table to run function is empty
+    flag1 = False
+
+    flag2 = False
     for row in t:
         if i == 0:
             table.append(row)
-            # Add the first row of labels
         else:
             flag1 = f(row)
             if flag1:
                 table.append(row)
                 flag2 = True
-                # At least one row matches the function
+
             else:
                 continue
         i = i+1
@@ -93,7 +88,6 @@ def selection(t, f):
         return table
     else:
         return None
-
 
 
 def index_calculator(row, r):
@@ -106,9 +100,9 @@ def index_calculator(row, r):
     new_list = []
     for index in r:
         if index in row:
-            # if element exists in the table, add to table as an index number
+
             new_list.append(row.index(index))
-    # sort the index number
+
     new_list.sort()
     return new_list
 
@@ -126,14 +120,9 @@ def projection(t, r):
 
     """
 
-    if r == "" or r is None or not r:
-        return None
-
-    # Call helper to get index of matching columns
     attribute_index = index_calculator(t[0], r)
     print (attribute_index)
     if attribute_index is []:
-        # Raise exception if there is no matching attribute
         raise UnknownAttributeException
     else:
         result_table = []
@@ -143,8 +132,6 @@ def projection(t, r):
                 temp_list.append(row[index])
             result_table.append(temp_list)
             temp_list = []
-
-
     return result_table
 
 
@@ -174,8 +161,3 @@ def cross_product(t1, t2):
         return result
     else:
         return result_table
-
-#
-# R = [["A", "B", "C"], [1, 2, 3], [4, 5, 6]]
-# print projection(R,[])
-# print projection([],[])
