@@ -64,15 +64,11 @@ def selection(t, f):
     [["A", "B", "C"], [4, 5, 6]]
 
     """
-
-    i = 0
+    index = 0
     table = []
-
-    flag1 = False
-
     flag2 = False
     for row in t:
-        if i == 0:
+        if index == 0:
             table.append(row)
         else:
             flag1 = f(row)
@@ -82,8 +78,7 @@ def selection(t, f):
 
             else:
                 continue
-        i = i+1
-
+        index += 1
     if flag2:
         return table
     else:
@@ -96,13 +91,10 @@ def index_calculator(row, r):
     :param: r - the attributes subset
     :returns: a list which contains the indexes of the attributes
     """
-
     new_list = []
     for index in r:
         if index in row:
-
             new_list.append(row.index(index))
-
     new_list.sort()
     return new_list
 
@@ -119,7 +111,6 @@ def projection(t, r):
     [["A", "C"], [1, 3], [4, 6]]
 
     """
-
     attribute_index = index_calculator(t[0], r)
     print (attribute_index)
     if attribute_index is []:
@@ -145,8 +136,6 @@ def cross_product(t1, t2):
     > R1 = [["A", "B"], [1,2], [3,4]]
     > R2 = [["C", "D"], [5,6]]
     [["A", "B", "C", "D"], [1, 2, 5, 6], [3, 4, 5, 6]]
-
-
     """
     if t1 is None or t2 is None:
         return None
