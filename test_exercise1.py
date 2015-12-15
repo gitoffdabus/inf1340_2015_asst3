@@ -41,6 +41,8 @@ GRADUATES = [["Number", "Surname", "Age"],
              [7285, "Ryan", 37],
              ["Surname", "Jack", 39],
              [9555, "Darkes", 38]]
+
+
 #####################
 # HELPER FUNCTIONS ##
 #####################
@@ -56,6 +58,8 @@ def is_equal(t1, t2):
 #####################
 # FILTER FUNCTIONS ##
 #####################
+
+
 def filter_employees(row):
     """
     Check if employee represented by row
@@ -71,6 +75,7 @@ def filter_employees(row):
 ###################
 # TEST FUNCTIONS ##
 ###################
+
 
 def test_selection():
     """
@@ -111,17 +116,17 @@ def test_projection():
     assert is_equal(result_3, projection(EMPLOYEES, ["Surname"]))
     try:
         projection(EMPLOYEES, ["inf"])
-    except UnknownAttributeException:
+    except ValueError:
         assert True
 
     try:
         projection(R3, ["inf"])
-    except UnknownAttributeException:
+    except ValueError:
         assert True
 
     try:
         projection(R3, [""])
-    except UnknownAttributeException:
+    except ValueError:
         assert True
 
 
