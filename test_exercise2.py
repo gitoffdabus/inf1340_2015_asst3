@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-
+# imports one per line
+import os
+from exercise2 import decide
 """ Module to test papers.py  """
 
 __author__ = 'Mib_Oli_Par'
 
 
-# imports one per line
-import os
-from exercise2 import decide
-
-DIR="test_jsons/"
+DIR = "test_jsons/"
 os.chdir(DIR)
+
 
 def test_returning():
     """
@@ -46,9 +45,12 @@ def test_visa_validity():
 
 def test_medical_advisory():
     """
-    Test for travelers traveling from countries having medical advisories
-    #1 Traveler belonging to Kanadia but traveling from a country having medical advisory
-    #2 Traveler from some other country, traveling from a country having medical advisory
+    Test for travelers traveling from
+    countries having medical advisories
+    #1 Traveler belonging to Kanadia but
+    traveling from a country having medical advisory
+    #2 Traveler from some other country,
+    traveling from a country having medical advisory
     """
 
     assert decide("medical_advisory.json", "countries.json") ==\
@@ -67,5 +69,3 @@ def test_miscellaneous():
 
     assert decide("miscellaneous.json", "countries.json") ==\
         ["Reject", "Accept", "Accept", "Reject", "Quarantine"]
-
-

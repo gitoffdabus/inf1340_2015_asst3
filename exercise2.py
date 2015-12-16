@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+import re
+import datetime
+import json
 """ Assignment 3, Exercise 2, INF1340, Fall, 2015. Kanadia
 
 Computer-based immigration office for Kanadia
@@ -9,19 +11,15 @@ Computer-based immigration office for Kanadia
 __author__ = 'Mib_Oli_Par'
 
 
-import re
-import datetime
-import json
-
 ######################
-## global constants ##
+# global constants #
 ######################
 REQUIRED_FIELDS = ["passport", "first_name", "last_name",
                    "birth_date", "home", "entry_reason", "from"]
 
 
 ######################
-## global variables ##
+# global variables #
 ######################
 '''
 countries:
@@ -39,7 +37,8 @@ COUNTRIES = None
 
 def valid_passport_format(passport_number):
     """
-    Checks whether a passport number is five sets of five alpha-number characters separated by dashes
+    Checks whether a passport number is five sets of
+    five alpha-number characters separated by dashes
     :param passport_number: alpha-numeric string
     :return: Boolean; True if the format is valid, False otherwise
     """
@@ -225,6 +224,3 @@ def decide(input_file, countries_file):
         else:
             result_list.append("Reject")
     return result_list
-
-
-
