@@ -165,7 +165,7 @@ def decide(input_file, countries_file):
     with open(countries_file, "r") as file_reader2:
         file_contents2 = file_reader2.read()
         json_countries = json.loads(file_contents2)
-    # print json.dumps(json_citizens, indent=1)
+    # Print json.dumps(json_citizens, indent=1)
 
     result_list = []
     for citizen in json_citizens:
@@ -175,7 +175,7 @@ def decide(input_file, countries_file):
             if entry in citizen.keys():
                 new_list.append(entry)
         if new_list == REQUIRED_FIELDS:
-            # check whether the passport no, visa no, date are legal
+            # Check whether the passport no, visa no, date are legal
             passport_number_validity = valid_passport_format(citizen["passport"])
             if passport_number_validity is False:
                 result_list.append("Reject")
@@ -208,7 +208,7 @@ def decide(input_file, countries_file):
                         elif location is True:
                             # Check reason for entry
                             reason = reason_for_entry(citizen, json_countries)
-                            # If reason is to visit & no visa is required then simply check for medical advisory
+                            # If reason is to visit & no visa is required then check for medical advisory
                             if reason is False:
                                 quarantine_required = medical_advisory_check(citizen, json_countries)
                                 if quarantine_required is False:
@@ -233,7 +233,7 @@ def decide(input_file, countries_file):
                                         if visa_duration_validity is False:
                                             result_list.append("Reject")
                                         else:
-                                            # If the previous three checks are cleared, check for medical advisory
+                                            # If  previous three checks clear, check for medical advisory
                                             quarantine_required = medical_advisory_check(citizen, json_countries)
                                             if quarantine_required is False:
                                                 result_list.append("Accept")
