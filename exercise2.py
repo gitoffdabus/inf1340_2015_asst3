@@ -81,6 +81,13 @@ def valid_date_format(date_string):
 
 
 def valid_location(citizen_location, ministry_location):
+    """
+    To check the validity of the countries
+    which a person has travelled
+    :param citizen_location:Details of Citizen
+    :param ministry_location: Details of locations
+    :return:
+    """
     if "via" in citizen_location.keys():
         if (citizen_location["via"]["country"]).upper() not in ministry_location.keys():
             return False
@@ -92,6 +99,13 @@ def valid_location(citizen_location, ministry_location):
 
 
 def visa_type(citizen_visa, visit_country):
+    """
+    To check whether the person requires
+    visa or not
+    :param citizen_visa:Details of citizen
+    :param visit_country: Details of country
+    :return:
+    """
     if citizen_visa["home"]["country"] in visit_country.keys():
         country_code = citizen_visa["home"]["country"]
         if visit_country[country_code]["visitor_visa_required"] == 0:
@@ -101,6 +115,12 @@ def visa_type(citizen_visa, visit_country):
 
 
 def reason_for_entry(citizen_reason, country):
+    """
+    To check whether the reason of visit
+    :param citizen_reason: reason of visit
+    :param country:Details about countries
+    :return:
+    """
     if citizen_reason["entry_reason"] == "returning":
         return False
     elif citizen_reason["entry_reason"] == "visit":
@@ -112,6 +132,13 @@ def reason_for_entry(citizen_reason, country):
 
 
 def medical_advisory_check(citizen, medical_advisory):
+    """
+    To check whether the country from which
+    passenger is returning is having any medical problems
+    :param citizen:Details of a citizen
+    :param medical_advisory:File which details of countries
+    :return:
+    """
     if "via" in citizen.keys() and citizen["via"]["country"] in medical_advisory.keys():
         if medical_advisory[citizen["via"]["country"]]["medical_advisory"] == "":
             return False
