@@ -6,7 +6,7 @@ Test module for exercise3.py
 
 """
 
-__author__ = 'Oli_Mib_Par'
+__author__ = 'Mib_Oli_Par'
 
 ###########
 # TABLES ##

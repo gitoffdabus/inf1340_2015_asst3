@@ -4,7 +4,7 @@
 
 This module performs table operations on database tables
 implemented as lists of lists. """
-__author__ = 'Oli_Mib_Par'
+__author__ = 'Mib_Oli_Par'
 
 #####################
 # HELPER FUNCTIONS ##

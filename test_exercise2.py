@@ -2,21 +2,15 @@
 
 """ Module to test papers.py  """
 
-__author__ = 'Susan Sim'
-__email__ = "ses@drsusansim.org"
+__author__ = 'Mib_Oli_Par'
 
-__copyright__ = "2014 Susan Sim"
-__license__ = "MIT License"
-
-__status__ = "Prototype"
 
 # imports one per line
 import os
 from exercise2 import decide
 
-DIR = "test_jsons/"
+DIR="test_jsons/"
 os.chdir(DIR)
-
 
 def test_returning():
     """
