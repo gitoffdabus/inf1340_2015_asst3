@@ -52,9 +52,9 @@ def test_visa_validity():
 
 def test_medical_advisory():
     """
-    Test for travellers travelling from countries having medical advisories
-    #1 Traveller belonging to Kanadia but travelling from a country having medical advisory
-    #2 Traveller from some other country, travelling from a country having medical advisory
+    Test for travelers traveling from countries having medical advisories
+    #1 Traveler belonging to Canada but traveling from a country having medical advisory
+    #2 Traveler from some other country, traveling from a country having medical advisory
     """
 
     assert decide("medical_advisory.json", "countries.json") ==\
@@ -63,12 +63,12 @@ def test_medical_advisory():
 
 def test_miscellaneous():
     """
-    Tests for some minor details in traveller's data
+    Tests for some minor details in traveler's data
     #1 Whether all the required fields are provided or nor (last name missing)
     #2 Lowercase passport numbers
     #3 Lowercase country code
     #4 Whether the passport number is in correct format
-    #5 If the traveller is travelling via a country having medical advisory
+    #5 If the traveler is traveling via a country having medical advisory
     """
 
     assert decide("miscellaneous.json", "countries.json") ==\
