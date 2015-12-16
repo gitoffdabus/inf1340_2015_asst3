@@ -88,7 +88,7 @@ def valid_location(citizen_location, ministry_location):
         if (citizen_location["via"]["country"]).upper() not in ministry_location.keys():
             return False
     elif (citizen_location["home"]["country"]).upper() not in ministry_location.keys() \
-    or citizen_location["from"]["country"].upper() not in ministry_location.keys():
+            or citizen_location["from"]["country"].upper() not in ministry_location.keys():
         return False
     else:
         return True
@@ -107,7 +107,7 @@ def reason_for_entry(citizen_reason, country):
     if citizen_reason["entry_reason"] == "returning":
         return False
     elif citizen_reason["entry_reason"] == "visit":
-        # chk whether visitor visa required
+        # Check whether or not visitor visa required
         visa_required = visa_type(citizen_reason, country)
         if visa_required is False:
             return False
@@ -216,7 +216,7 @@ def decide(input_file, countries_file):
                                 else:
                                     result_list.append("Quarantine")
                             else:
-                                # if visa is required
+                                # If visa is required
                                 # Check for valid visa number
                                 visa_number_validity = valid_visa_format(citizen["visa"]["code"])
                                 if visa_number_validity is False:
@@ -233,7 +233,7 @@ def decide(input_file, countries_file):
                                         if visa_duration_validity is False:
                                             result_list.append("Reject")
                                         else:
-                                            # if the previous three checks are cleared, check for medical advisory
+                                            # If the previous three checks are cleared, check for medical advisory
                                             quarantine_required = medical_advisory_check(citizen, json_countries)
                                             if quarantine_required is False:
                                                 result_list.append("Accept")
