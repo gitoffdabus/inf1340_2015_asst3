@@ -53,7 +53,7 @@ def test_visa_validity():
 def test_medical_advisory():
     """
     Test for travelers traveling from countries having medical advisories
-    #1 Traveler belonging to Canada but traveling from a country having medical advisory
+    #1 Traveler belonging to Kanadia but traveling from a country having medical advisory
     #2 Traveler from some other country, traveling from a country having medical advisory
     """
 
