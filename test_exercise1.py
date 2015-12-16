@@ -24,7 +24,7 @@ R1 = [["Employee", "Department"],
       ["White", "production"]]
 
 R2 = [["Department", "Head"],
-      ["production", "Mori"],
+      ["production", "Mory"],
       ["sales", "Brown"]]
 
 R3 = [[]]
@@ -136,11 +136,11 @@ def test_cross_product():
     """
 
     result = [["Employee", "Department", "Department", "Head"],
-              ["Smith", "sales", "production", "Mori"],
+              ["Smith", "sales", "production", "Mory"],
               ["Smith", "sales", "sales", "Brown"],
-              ["Black", "production", "production", "Mori"],
+              ["Black", "production", "production", "Mory"],
               ["Black", "production", "sales", "Brown"],
-              ["White", "production", "production", "Mori"],
+              ["White", "production", "production", "Mory"],
               ["White", "production", "sales", "Brown"]]
 
     result2 = [["A", "B", "C", "D"],
