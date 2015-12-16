@@ -86,7 +86,7 @@ def valid_location(citizen_location, ministry_location):
     which a person has travelled
     :param citizen_location:Details of Citizen
     :param ministry_location: Details of locations
-    :return:
+    :return: Boolean True if the citizen is travelling to/from a known location, else returns false
     """
     if "via" in citizen_location.keys():
         if (citizen_location["via"]["country"]).upper() not in ministry_location.keys():
@@ -102,9 +102,9 @@ def visa_type(citizen_visa, visit_country):
     """
     To check whether the person requires
     visa or not
-    :param citizen_visa:Details of citizen
-    :param visit_country: Details of country
-    :return:
+    :param: citizen_visa:Details of citizen
+    :param: visit_country: Details of country
+    :return: Boolean True if the visa is required else returns false
     """
     if citizen_visa["home"]["country"] in visit_country.keys():
         country_code = citizen_visa["home"]["country"]
@@ -119,7 +119,7 @@ def reason_for_entry(citizen_reason, country):
     To check whether the reason of visit
     :param citizen_reason: reason of visit
     :param country:Details about countries
-    :return:
+    :return: Boolean True if the entry reason is "visit" and a visa is required, else returns False
     """
     if citizen_reason["entry_reason"] == "returning":
         return False
@@ -137,7 +137,7 @@ def medical_advisory_check(citizen, medical_advisory):
     passenger is returning is having any medical problems
     :param citizen:Details of a citizen
     :param medical_advisory:File which details of countries
-    :return:
+    :return: Boolean True if the person is travelling via a known location with medical advisory
     """
     if "via" in citizen.keys() and citizen["via"]["country"] in medical_advisory.keys():
         if medical_advisory[citizen["via"]["country"]]["medical_advisory"] == "":
